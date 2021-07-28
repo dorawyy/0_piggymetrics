@@ -1,3 +1,7 @@
+# Viewing Swagger Docs
+Copy and paste the JSON files into http://editor.swagger.io
+
+
 # Generating Swagger Documentation
 
 **Step 1**
