@@ -100,7 +100,7 @@ The following JSON response will be the generated Swagger documentation!
 
 
 
-##Note
+## Note
 OpenAPI documentation for Statistics Service is unavailable as there is a 
 problem spinning up Statistics Service through the Dockerfile rather than the 
 uploaded image.
