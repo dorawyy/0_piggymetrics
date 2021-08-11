@@ -7,7 +7,7 @@ Copy and paste the JSON files into http://editor.swagger.io
 **Step 1**
 
 Add springfox-swagger-2 dependency in the pom.xml of all services
-```
+```xml
 <dependency>
 <groupId>io.springfox</groupId>
 <artifactId>springfox-swagger2</artifactId>
@@ -18,7 +18,7 @@ Add springfox-swagger-2 dependency in the pom.xml of all services
 **Step 2**
 
 Add @EnableSwagger2 Annotation to all services
-```
+```java
 @EnableSwagger2
 public class AccountApplication {
 
@@ -32,15 +32,15 @@ public class AccountApplication {
 **Step 3**
 
 Change the docker-compose file to read from our Dockerfiles. This involves changing the line 
-```
+```yml
 image: sqshq/piggymetrics-account-service
 ```
 to
-```
+```yml
 build: account-service
 ```
 End Result:
-```
+```yml
   account-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
