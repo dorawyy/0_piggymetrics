@@ -11,9 +11,9 @@ public class ExchangeRatesClientFallback implements ExchangeRatesClient {
 
     @Override
     public ExchangeRatesContainer getRates(Currency base) {
-        ExchangeRatesContainer container = new ExchangeRatesContainer();
-        container.setBase(Currency.getBase());
-        container.setRates(Collections.emptyMap());
+        ExchangeRatesContainer container = new ExchangeRatesContainer(); // call
+        container.setBase(Currency.getBase()); // call // call
+        container.setRates(Collections.emptyMap()); // call
         return container;
     }
 }

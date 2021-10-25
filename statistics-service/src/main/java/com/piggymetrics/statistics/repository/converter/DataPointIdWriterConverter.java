@@ -16,8 +16,8 @@ public class DataPointIdWriterConverter implements Converter<DataPointId, DBObje
 
 		DBObject object = new BasicDBObject(FIELDS);
 
-		object.put("date", id.getDate());
-		object.put("account", id.getAccount());
+		object.put("date", id.getDate()); // call 
+		object.put("account", id.getAccount()); // call
 
 		return object;
 	}

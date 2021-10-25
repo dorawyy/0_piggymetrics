@@ -9,6 +9,6 @@ public class FrequencyWriterConverter implements Converter<Frequency, Integer> {
 
 	@Override
 	public Integer convert(Frequency frequency) {
-		return frequency.getDays();
+		return frequency.getDays(); // call 
 	}
 }

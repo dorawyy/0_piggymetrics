@@ -23,7 +23,7 @@ public class RecipientServiceImpl implements RecipientService {
 	@Override
 	public Recipient findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
-		return repository.findByAccountName(accountName);
+		return repository.findByAccountName(accountName); // call, missing, interface
 	}
 
 	/**
@@ -32,15 +32,15 @@ public class RecipientServiceImpl implements RecipientService {
 	@Override
 	public Recipient save(String accountName, Recipient recipient) {
 
-		recipient.setAccountName(accountName);
-		recipient.getScheduledNotifications().values()
+		recipient.setAccountName(accountName); // call
+		recipient.getScheduledNotifications().values() // call 
 				.forEach(settings -> {
-					if (settings.getLastNotified() == null) {
-						settings.setLastNotified(new Date());
+					if (settings.getLastNotified() == null) { // call, found as call from lambda$save$0
+						settings.setLastNotified(new Date()); // call, found as call from lambda$save$0
 					}
 				});
 
-		repository.save(recipient);
+		repository.save(recipient); // call, missing
 
 		log.info("recipient {} settings has been updated", recipient);
 
@@ -51,12 +51,12 @@ public class RecipientServiceImpl implements RecipientService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Recipient> findReadyToNotify(NotificationType type) {
+	public List<Recipient> findReadyToNotify(NotificationType type) { 
 		switch (type) {
 			case BACKUP:
-				return repository.findReadyForBackup();
+				return repository.findReadyForBackup(); // call, missing
 			case REMIND:
-				return repository.findReadyForRemind();
+				return repository.findReadyForRemind(); // call, missing
 			default:
 				throw new IllegalArgumentException();
 		}
@@ -67,7 +67,7 @@ public class RecipientServiceImpl implements RecipientService {
 	 */
 	@Override
 	public void markNotified(NotificationType type, Recipient recipient) {
-		recipient.getScheduledNotifications().get(type).setLastNotified(new Date());
-		repository.save(recipient);
+		recipient.getScheduledNotifications().get(type).setLastNotified(new Date()); // call // call
+		repository.save(recipient); // call, missing
 	}
 }

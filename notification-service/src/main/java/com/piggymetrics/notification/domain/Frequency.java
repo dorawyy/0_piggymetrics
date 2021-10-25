@@ -17,8 +17,8 @@ public enum Frequency {
 	}
 
 	public static Frequency withDays(int days) {
-		return Stream.of(Frequency.values())
-				.filter(f -> f.getDays() == days)
+		return Stream.of(Frequency.values())  
+				.filter(f -> f.getDays() == days) // call 
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}

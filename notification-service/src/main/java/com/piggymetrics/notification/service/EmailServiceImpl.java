@@ -25,7 +25,7 @@ public class EmailServiceImpl implements EmailService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private JavaMailSender mailSender;
+	private JavaMailSender mailSender; // not piggymetric
 
 	@Autowired
 	private Environment env;
@@ -33,22 +33,22 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void send(NotificationType type, Recipient recipient, String attachment) throws MessagingException, IOException {
 
-		final String subject = env.getProperty(type.getSubject());
-		final String text = MessageFormat.format(env.getProperty(type.getText()), recipient.getAccountName());
+		final String subject = env.getProperty(type.getSubject()); // call 
+		final String text = MessageFormat.format(env.getProperty(type.getText()), recipient.getAccountName()); // call // call
 
-		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessage message = mailSender.createMimeMessage(); 
 
-		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		helper.setTo(recipient.getEmail());
-		helper.setSubject(subject);
-		helper.setText(text);
+		MimeMessageHelper helper = new MimeMessageHelper(message, true); // not piggymetric
+		helper.setTo(recipient.getEmail()); // call
+		helper.setSubject(subject); 
+		helper.setText(text); 
 
 		if (StringUtils.hasLength(attachment)) {
-			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes()));
+			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes())); // call (getAttachment)
 		}
 
 		mailSender.send(message);
 
-		log.info("{} email notification has been send to {}", type, recipient.getEmail());
+		log.info("{} email notification has been send to {}", type, recipient.getEmail()); // call
 	}
 }

@@ -24,11 +24,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
     @Bean
     public RequestInterceptor oauth2FeignRequestInterceptor(){
-        return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(), clientCredentialsResourceDetails());
+        return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(), clientCredentialsResourceDetails()); // call
     }
 
     @Bean
     public OAuth2RestTemplate clientCredentialsRestTemplate() {
-        return new OAuth2RestTemplate(clientCredentialsResourceDetails());
+        return new OAuth2RestTemplate(clientCredentialsResourceDetails()); // call
     }
 }

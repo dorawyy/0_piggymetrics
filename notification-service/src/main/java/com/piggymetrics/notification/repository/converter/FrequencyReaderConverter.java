@@ -9,6 +9,6 @@ public class FrequencyReaderConverter implements Converter<Integer, Frequency> {
 
 	@Override
 	public Frequency convert(Integer days) {
-		return Frequency.withDays(days);
+		return Frequency.withDays(days); // call 
 	}
 }

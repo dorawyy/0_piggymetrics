@@ -20,7 +20,7 @@ public class RecipientController {
 
 	@RequestMapping(path = "/current", method = RequestMethod.GET)
 	public Object getCurrentNotificationsSettings(Principal principal) {
-		return recipientService.findByAccountName(principal.getName());
+		return recipientService.findByAccountName(principal.getName()); // call 
 	}
 
 	@RequestMapping(path = "/current", method = RequestMethod.PUT)

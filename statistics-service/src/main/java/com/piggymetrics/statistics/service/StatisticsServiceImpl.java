@@ -41,7 +41,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public List<DataPoint> findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
-		return repository.findByIdAccount(accountName);
+		return repository.findByIdAccount(accountName); // call, missing
 	}
 
 	/**
@@ -53,40 +53,40 @@ public class StatisticsServiceImpl implements StatisticsService {
 		Instant instant = LocalDate.now().atStartOfDay()
 				.atZone(ZoneId.systemDefault()).toInstant();
 
-		DataPointId pointId = new DataPointId(accountName, Date.from(instant));
+		DataPointId pointId = new DataPointId(accountName, Date.from(instant)); // call 
 
-		Set<ItemMetric> incomes = account.getIncomes().stream()
-				.map(this::createItemMetric)
+		Set<ItemMetric> incomes = account.getIncomes().stream() // call
+				.map(this::createItemMetric) // call, missing 
 				.collect(Collectors.toSet());
 
-		Set<ItemMetric> expenses = account.getExpenses().stream()
-				.map(this::createItemMetric)
+		Set<ItemMetric> expenses = account.getExpenses().stream() // call
+				.map(this::createItemMetric) // call, missing
 				.collect(Collectors.toSet());
 
-		Map<StatisticMetric, BigDecimal> statistics = createStatisticMetrics(incomes, expenses, account.getSaving());
+		Map<StatisticMetric, BigDecimal> statistics = createStatisticMetrics(incomes, expenses, account.getSaving()); // call // call
 
-		DataPoint dataPoint = new DataPoint();
-		dataPoint.setId(pointId);
-		dataPoint.setIncomes(incomes);
-		dataPoint.setExpenses(expenses);
-		dataPoint.setStatistics(statistics);
-		dataPoint.setRates(ratesService.getCurrentRates());
+		DataPoint dataPoint = new DataPoint(); // call
+		dataPoint.setId(pointId); // call
+		dataPoint.setIncomes(incomes); // call 
+		dataPoint.setExpenses(expenses); // call 
+		dataPoint.setStatistics(statistics); // call 
+		dataPoint.setRates(ratesService.getCurrentRates()); // call // call 
 
 		log.debug("new datapoint has been created: {}", pointId);
 
-		return repository.save(dataPoint);
+		return repository.save(dataPoint); // call, missing
 	}
 
 	private Map<StatisticMetric, BigDecimal> createStatisticMetrics(Set<ItemMetric> incomes, Set<ItemMetric> expenses, Saving saving) {
 
-		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), Currency.getBase(), saving.getAmount());
+		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), Currency.getBase(), saving.getAmount()); // call // call // call // call 
 
 		BigDecimal expensesAmount = expenses.stream()
-				.map(ItemMetric::getAmount)
+				.map(ItemMetric::getAmount) // call, missing
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal incomesAmount = incomes.stream()
-				.map(ItemMetric::getAmount)
+				.map(ItemMetric::getAmount) // call, missing
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		return ImmutableMap.of(
@@ -103,9 +103,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private ItemMetric createItemMetric(Item item) {
 
 		BigDecimal amount = ratesService
-				.convert(item.getCurrency(), Currency.getBase(), item.getAmount())
-				.divide(item.getPeriod().getBaseRatio(), 4, RoundingMode.HALF_UP);
+				.convert(item.getCurrency(), Currency.getBase(), item.getAmount()) // call // call // call // call
+				.divide(item.getPeriod().getBaseRatio(), 4, RoundingMode.HALF_UP); // call // call
 
-		return new ItemMetric(item.getTitle(), amount);
+		return new ItemMetric(item.getTitle(), amount); // call // call
 	}
 }

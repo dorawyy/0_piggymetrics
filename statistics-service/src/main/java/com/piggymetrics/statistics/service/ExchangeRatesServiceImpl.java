@@ -31,14 +31,14 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 	@Override
 	public Map<Currency, BigDecimal> getCurrentRates() {
 
-		if (container == null || !container.getDate().equals(LocalDate.now())) {
-			container = client.getRates(Currency.getBase());
+		if (container == null || !container.getDate().equals(LocalDate.now())) { // call
+			container = client.getRates(Currency.getBase()); // call // call 
 			log.info("exchange rates has been updated: {}", container);
 		}
 
 		return ImmutableMap.of(
-				Currency.EUR, container.getRates().get(Currency.EUR.name()),
-				Currency.RUB, container.getRates().get(Currency.RUB.name()),
+				Currency.EUR, container.getRates().get(Currency.EUR.name()), // call
+				Currency.RUB, container.getRates().get(Currency.RUB.name()), // call 
 				Currency.USD, BigDecimal.ONE
 		);
 	}
@@ -51,7 +51,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 
 		Assert.notNull(amount);
 
-		Map<Currency, BigDecimal> rates = getCurrentRates();
+		Map<Currency, BigDecimal> rates = getCurrentRates(); // call
 		BigDecimal ratio = rates.get(to).divide(rates.get(from), 4, RoundingMode.HALF_UP);
 
 		return amount.multiply(ratio);

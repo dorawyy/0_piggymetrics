@@ -38,17 +38,17 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Bean
     public RequestInterceptor oauth2FeignRequestInterceptor(){
-        return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(), clientCredentialsResourceDetails());
+        return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(), clientCredentialsResourceDetails()); // call
     }
 
     @Bean
     public OAuth2RestTemplate clientCredentialsRestTemplate() {
-        return new OAuth2RestTemplate(clientCredentialsResourceDetails());
+        return new OAuth2RestTemplate(clientCredentialsResourceDetails()); // call
     }
 
     @Bean
-    public ResourceServerTokenServices tokenServices() {
-        return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
+    public ResourceServerTokenServices tokenServices() { // yw: all call edges of this message is missing 
+        return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());  // call 
     }
 
     @Override

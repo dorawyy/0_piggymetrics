@@ -19,21 +19,21 @@ public class AccountController {
 	@PreAuthorize("#oauth2.hasScope('server') or #name.equals('demo')")
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
 	public Account getAccountByName(@PathVariable String name) {
-		return accountService.findByName(name);
+		return accountService.findByName(name); // call
 	}
 
 	@RequestMapping(path = "/current", method = RequestMethod.GET)
 	public Account getCurrentAccount(Principal principal) {
-		return accountService.findByName(principal.getName());
+		return accountService.findByName(principal.getName()); // call
 	}
 
 	@RequestMapping(path = "/current", method = RequestMethod.PUT)
 	public void saveCurrentAccount(Principal principal, @Valid @RequestBody Account account) {
-		accountService.saveChanges(principal.getName(), account);
+		accountService.saveChanges(principal.getName(), account); // call 
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.POST)
 	public Account createNewAccount(@Valid @RequestBody User user) {
-		return accountService.create(user);
+		return accountService.create(user); // check
 	}
 }

@@ -32,14 +32,14 @@ public class NotificationServiceImpl implements NotificationService {
 
 		final NotificationType type = NotificationType.BACKUP;
 
-		List<Recipient> recipients = recipientService.findReadyToNotify(type);
+		List<Recipient> recipients = recipientService.findReadyToNotify(type); // call 
 		log.info("found {} recipients for backup notification", recipients.size());
 
 		recipients.forEach(recipient -> CompletableFuture.runAsync(() -> {
 			try {
-				String attachment = client.getAccount(recipient.getAccountName());
-				emailService.send(type, recipient, attachment);
-				recipientService.markNotified(type, recipient);
+				String attachment = client.getAccount(recipient.getAccountName()); // call, missing, interface // call (from lambda$null$0)
+				emailService.send(type, recipient, attachment); // call
+				recipientService.markNotified(type, recipient); // call
 			} catch (Throwable t) {
 				log.error("an error during backup notification for {}", recipient, t);
 			}
@@ -52,13 +52,13 @@ public class NotificationServiceImpl implements NotificationService {
 
 		final NotificationType type = NotificationType.REMIND;
 
-		List<Recipient> recipients = recipientService.findReadyToNotify(type);
+		List<Recipient> recipients = recipientService.findReadyToNotify(type); // call
 		log.info("found {} recipients for remind notification", recipients.size());
 
 		recipients.forEach(recipient -> CompletableFuture.runAsync(() -> {
 			try {
-				emailService.send(type, recipient, null);
-				recipientService.markNotified(type, recipient);
+				emailService.send(type, recipient, null); // call
+				recipientService.markNotified(type, recipient); // call
 			} catch (Throwable t) {
 				log.error("an error during remind notification for {}", recipient, t);
 			}
