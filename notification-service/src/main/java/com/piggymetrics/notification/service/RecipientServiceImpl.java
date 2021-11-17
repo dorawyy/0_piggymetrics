@@ -23,7 +23,7 @@ public class RecipientServiceImpl implements RecipientService {
 	@Override
 	public Recipient findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
-		return repository.findByAccountName(accountName); // call, missing, interface
+		return repository.findByAccountName(accountName); // call, missing, repo
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class RecipientServiceImpl implements RecipientService {
 					}
 				});
 
-		repository.save(recipient); // call, missing
+		repository.save(recipient); // call, missing, repo
 
 		log.info("recipient {} settings has been updated", recipient);
 
@@ -54,9 +54,9 @@ public class RecipientServiceImpl implements RecipientService {
 	public List<Recipient> findReadyToNotify(NotificationType type) { 
 		switch (type) {
 			case BACKUP:
-				return repository.findReadyForBackup(); // call, missing
+				return repository.findReadyForBackup(); // call, missing, repo
 			case REMIND:
-				return repository.findReadyForRemind(); // call, missing
+				return repository.findReadyForRemind(); // call, missing, repo
 			default:
 				throw new IllegalArgumentException();
 		}
@@ -68,6 +68,6 @@ public class RecipientServiceImpl implements RecipientService {
 	@Override
 	public void markNotified(NotificationType type, Recipient recipient) {
 		recipient.getScheduledNotifications().get(type).setLastNotified(new Date()); // call // call
-		repository.save(recipient); // call, missing
+		repository.save(recipient); // call, missing, repo
 	}
 }

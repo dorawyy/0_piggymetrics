@@ -1,5 +1,7 @@
 package com.piggymetrics.notification.domain;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public enum Frequency {
@@ -18,8 +20,8 @@ public enum Frequency {
 
 	public static Frequency withDays(int days) {
 		return Stream.of(Frequency.values())  
-				.filter(f -> f.getDays() == days) // call 
+				.filter(f -> f.getDays() == days) // call, soot treats this as functional interface implementation
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(IllegalArgumentException::new); // 
 	}
 }

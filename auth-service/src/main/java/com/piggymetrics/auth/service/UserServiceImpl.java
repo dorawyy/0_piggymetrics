@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void create(User user) {
 
-		Optional<User> existing = repository.findById(user.getUsername()); // call // call 
+		Optional<User> existing = repository.findById(user.getUsername()); // call, missing, repo // call 
 		existing.ifPresent(it-> {throw new IllegalArgumentException("user already exists: " + it.getUsername());}); // call from lambda$create$0
 
 		String hash = encoder.encode(user.getPassword()); // call 
 		user.setPassword(hash); // call com.piggymetrics.auth.domain.User
 
-		repository.save(user); // call com.piggymetrics.auth.repository.UserRepository
+		repository.save(user); // call, missing, repo
 
 		log.info("new user has been created: {}", user.getUsername()); // call
 	}

@@ -32,7 +32,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 	public Map<Currency, BigDecimal> getCurrentRates() {
 
 		if (container == null || !container.getDate().equals(LocalDate.now())) { // call
-			container = client.getRates(Currency.getBase()); // call // call 
+			container = client.getRates(Currency.getBase()); // call, missing, openfeign // call 
 			log.info("exchange rates has been updated: {}", container);
 		}
 

@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableOAuth2Client
 @EnableFeignClients
 @EnableCircuitBreaker
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) // to enable method-level auth annotations; otherwise, annotations such as @preauthorize will be ignored by default
 public class AccountApplication {
 
 	public static void main(String[] args) {

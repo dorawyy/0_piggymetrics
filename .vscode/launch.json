@@ -1,0 +1,94 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RegistryApplication<registry>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.registry.RegistryApplication",
+            "projectName": "registry",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GatewayApplication<gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.gateway.GatewayApplication",
+            "projectName": "gateway",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MonitoringApplication<monitoring>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.monitoring.MonitoringApplication",
+            "projectName": "monitoring",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NotificationServiceApplication<notification-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.notification.NotificationServiceApplication",
+            "projectName": "notification-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ConfigApplication<config>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.config.ConfigApplication",
+            "projectName": "config",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AccountApplication<account-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.account.AccountApplication",
+            "projectName": "account-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthApplication<auth-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.auth.AuthApplication",
+            "projectName": "auth-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-StatisticsApplication<statistics-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.statistics.StatisticsApplication",
+            "projectName": "statistics-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-TurbineStreamServiceApplication<turbine-stream-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.piggymetrics.turbine.TurbineStreamServiceApplication",
+            "projectName": "turbine-stream-service",
+            "args": ""
+        }
+    ]
+}

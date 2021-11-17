@@ -6,6 +6,7 @@ import com.piggymetrics.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -27,7 +28,7 @@ public class AccountController {
 		return accountService.findByName(principal.getName()); // call
 	}
 
-	@RequestMapping(path = "/current", method = RequestMethod.PUT)
+	@RequestMapping(path = "/current", method = RequestMethod.PUT) // 
 	public void saveCurrentAccount(Principal principal, @Valid @RequestBody Account account) {
 		accountService.saveChanges(principal.getName(), account); // call 
 	}

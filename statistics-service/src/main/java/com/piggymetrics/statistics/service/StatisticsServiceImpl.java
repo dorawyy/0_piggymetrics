@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
@@ -41,7 +44,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public List<DataPoint> findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
-		return repository.findByIdAccount(accountName); // call, missing
+		return repository.findByIdAccount(accountName); // call, missing, repo
 	}
 
 	/**
@@ -56,7 +59,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		DataPointId pointId = new DataPointId(accountName, Date.from(instant)); // call 
 
 		Set<ItemMetric> incomes = account.getIncomes().stream() // call
-				.map(this::createItemMetric) // call, missing 
+				.map(this::createItemMetric) // call, missing, instance method reference, equivalent lambda expression is item -> this.createItemMetric(item) // the call graph edge is <java.util.stream.ReferencePipeline: java.lang.Object collect(java.util.stream.Collector)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> and then 72447, <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl: com.piggymetrics.statistics.domain.timeseries.ItemMetric createItemMetric(com.piggymetrics.statistics.domain.Item)>
 				.collect(Collectors.toSet());
 
 		Set<ItemMetric> expenses = account.getExpenses().stream() // call
@@ -74,7 +77,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		log.debug("new datapoint has been created: {}", pointId);
 
-		return repository.save(dataPoint); // call, missing
+		return repository.save(dataPoint); // call, missing, repo
 	}
 
 	private Map<StatisticMetric, BigDecimal> createStatisticMetrics(Set<ItemMetric> incomes, Set<ItemMetric> expenses, Saving saving) {
@@ -82,7 +85,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), Currency.getBase(), saving.getAmount()); // call // call // call // call 
 
 		BigDecimal expensesAmount = expenses.stream()
-				.map(ItemMetric::getAmount) // call, missing
+				.map(ItemMetric::getAmount) // call, missing, parameter method reference, equivalent lambda expression is itemMetric -> itemMetric.getAmount()
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal incomesAmount = incomes.stream()

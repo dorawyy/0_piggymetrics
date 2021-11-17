@@ -37,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 		recipients.forEach(recipient -> CompletableFuture.runAsync(() -> {
 			try {
-				String attachment = client.getAccount(recipient.getAccountName()); // call, missing, interface // call (from lambda$null$0)
+				String attachment = client.getAccount(recipient.getAccountName()); // call, missing, openfeign // call (from lambda$null$0)
 				emailService.send(type, recipient, attachment); // call
 				recipientService.markNotified(type, recipient); // call
 			} catch (Throwable t) {

@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account findByName(String accountName) {
 		Assert.hasLength(accountName);
-		return repository.findByName(accountName); // call, missing
+		return repository.findByName(accountName); // call, missing, repo
 	}
 
 	/**
@@ -45,10 +45,10 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account create(User user) {
 
-		Account existing = repository.findByName(user.getUsername()); // call, missing // call 
+		Account existing = repository.findByName(user.getUsername()); // call, missing, repo // call 
 		Assert.isNull(existing, "account already exists: " + user.getUsername()); // call
 
-		authClient.createUser(user); // call, missing
+		authClient.createUser(user); // call, missing, openfeign
 
 		Saving saving = new Saving(); // call
 		saving.setAmount(new BigDecimal(0)); // call
@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setLastSeen(new Date()); // call 
 		account.setSaving(saving); // call
 
-		repository.save(account); // call, missing
+		repository.save(account); // call, missing, repo
 
 		log.info("new account has been created: " + account.getName()); // call
 
@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void saveChanges(String name, Account update) {
 
-		Account account = repository.findByName(name); // call, missing 
+		Account account = repository.findByName(name); // call, missing, repo
 		Assert.notNull(account, "can't find account with name " + name);
 
 		account.setIncomes(update.getIncomes()); // call // call 
@@ -83,10 +83,10 @@ public class AccountServiceImpl implements AccountService {
 		account.setSaving(update.getSaving()); // call // call 
 		account.setNote(update.getNote()); // call // call 
 		account.setLastSeen(new Date()); // call 
-		repository.save(account); // call, missing
+		repository.save(account); // call, missing, repo
 
 		log.debug("account {} changes has been saved", name);
 
-		statisticsClient.updateStatistics(name, account); // call 
+		statisticsClient.updateStatistics(name, account); // call, missing, openfeign (2 calls, could be to accountService or to statisticsAccountService)
 	}
 }

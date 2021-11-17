@@ -68,7 +68,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 .tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService); 
+                .userDetailsService(userDetailsService);
+    } 
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
