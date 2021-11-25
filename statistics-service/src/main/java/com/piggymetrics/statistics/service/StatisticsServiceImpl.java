@@ -44,6 +44,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public List<DataPoint> findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
+		if (accountName == "demo" || accountName.equals("demo")){
+			throw new NullPointerException("null pointer exception");
+		}
 		return repository.findByIdAccount(accountName); // call, missing, repo
 	}
 

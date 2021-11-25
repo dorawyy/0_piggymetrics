@@ -6,6 +6,7 @@ import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.Currency;
 import com.piggymetrics.account.domain.Saving;
 import com.piggymetrics.account.domain.User;
+import com.piggymetrics.account.domain.timeseries.DataPoint;
 import com.piggymetrics.account.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -88,5 +90,8 @@ public class AccountServiceImpl implements AccountService {
 		log.debug("account {} changes has been saved", name);
 
 		statisticsClient.updateStatistics(name, account); // call, missing, openfeign (2 calls, could be to accountService or to statisticsAccountService)
+		// get
+		// compare
+		List<DataPoint> statDataPoints = statisticsClient.getStatisticsByAccountName(name);
 	}
 }
