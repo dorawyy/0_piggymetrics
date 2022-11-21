@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,13 +62,23 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		DataPointId pointId = new DataPointId(accountName, Date.from(instant)); // call 
 
-		Set<ItemMetric> incomes = account.getIncomes().stream() // call
-				.map(this::createItemMetric) // call, missing, instance method reference, equivalent lambda expression is item -> this.createItemMetric(item) // the call graph edge is <java.util.stream.ReferencePipeline: java.lang.Object collect(java.util.stream.Collector)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> and then 72447, <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl: com.piggymetrics.statistics.domain.timeseries.ItemMetric createItemMetric(com.piggymetrics.statistics.domain.Item)>
-				.collect(Collectors.toSet());
+		//Set<ItemMetric> incomes = account.getIncomes().stream() // call
+		//		.map(this::createItemMetric) // call, missing, instance method reference, equivalent lambda expression is item -> this.createItemMetric(item) // the call graph edge is <java.util.stream.ReferencePipeline: java.lang.Object collect(java.util.stream.Collector)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> and then 72447, <com.piggymetrics.statistics.service.StatisticsServiceImpl$createItemMetric__1: java.lang.Object apply(java.lang.Object)> may call <com.piggymetrics.statistics.service.StatisticsServiceImpl: com.piggymetrics.statistics.domain.timeseries.ItemMetric createItemMetric(com.piggymetrics.statistics.domain.Item)>
+		//		.collect(Collectors.toSet());
+		Set<ItemMetric> incomes = new HashSet<>();
+		for (Item income : account.getIncomes()) {
+			ItemMetric item = createItemMetric(income);
+			incomes.add(item);
+		}
 
-		Set<ItemMetric> expenses = account.getExpenses().stream() // call
-				.map(this::createItemMetric) // call, missing
-				.collect(Collectors.toSet());
+		//Set<ItemMetric> expenses = account.getExpenses().stream() // call
+		//		.map(this::createItemMetric) // call, missing
+		//		.collect(Collectors.toSet());
+		Set<ItemMetric> expenses = new HashSet<>();
+		for (Item expense : account.getExpenses()) {
+			ItemMetric item = createItemMetric(expense);
+			expenses.add(item);
+		}
 
 		Map<StatisticMetric, BigDecimal> statistics = createStatisticMetrics(incomes, expenses, account.getSaving()); // call // call
 
@@ -87,13 +98,23 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), Currency.getBase(), saving.getAmount()); // call // call // call // call 
 
-		BigDecimal expensesAmount = expenses.stream()
-				.map(ItemMetric::getAmount) // call, missing, parameter method reference, equivalent lambda expression is itemMetric -> itemMetric.getAmount()
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		//BigDecimal expensesAmount = expenses.stream()
+		//		.map(ItemMetric::getAmount) // call, missing, parameter method reference, equivalent lambda expression is itemMetric -> itemMetric.getAmount()
+		//		.reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal expensesAmount = BigDecimal.ZERO;
+		for (ItemMetric expense : expenses){
+			BigDecimal exp = expense.getAmount();
+			expensesAmount = expensesAmount.add(exp);
+		}
 
-		BigDecimal incomesAmount = incomes.stream()
-				.map(ItemMetric::getAmount) // call, missing
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		//BigDecimal incomesAmount = incomes.stream()
+		//		.map(ItemMetric::getAmount) // call, missing
+		//		.reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal incomesAmount = BigDecimal.ZERO;
+				for (ItemMetric income : incomes){
+					BigDecimal inc = income.getAmount();
+					incomesAmount = expensesAmount.add(inc);
+				}
 
 		return ImmutableMap.of(
 				StatisticMetric.EXPENSES_AMOUNT, expensesAmount,
