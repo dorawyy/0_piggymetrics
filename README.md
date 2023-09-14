@@ -24,7 +24,7 @@ Method	| Path	| Description	| User authenticated	| Available from UI
 ------------- | ------------------------- | ------------- |:-------------:|:----------------:|
 GET	| /accounts/{account}	| Get specified account data	|  | 	
 GET	| /accounts/current	| Get current account data	| × | ×
-GET	| /accounts/demo	| Get demo account data (pre-filled incomes/expenses items, etc)	|   | 	×
+GET	| /accounts/demo	| Get demo account data (pre-filled incomes/expenses items, etc.)	|   | 	×
 PUT	| /accounts/current	| Save current account data	| × | ×
 POST	| /accounts/	| Register new account	|   | ×
 
@@ -50,7 +50,7 @@ PUT	| /notifications/settings/current	| Save current account notification settin
 
 #### Notes
 - Each microservice has its own database, so there is no way to bypass API and access persistence data directly.
-- In this project, I use MongoDB as a primary database for each service. It might also make sense to have a polyglot persistence architecture (сhoose the type of db that is best suited to service requirements).
+- In this project, I use MongoDB as a primary database for each service. It might also make sense to have a polyglot persistence architecture (choose the type of db that is best suited to service requirements).
 - Service-to-service communication is quite simplified: microservices talking using only synchronous REST API. Common practice in a real-world systems is to use combination of interaction styles. For example, perform synchronous GET request to retrieve data and use asynchronous approach via Message broker for create/update operations in order to decouple services and buffer messages. However, this brings us to the [eventual consistency](http://martinfowler.com/articles/microservice-trade-offs.html#consistency) world.
 
 ## Infrastructure services
@@ -252,7 +252,22 @@ In this mode, all latest images will be pulled from Docker Hub.
 Just copy `docker-compose.yml` and hit `docker-compose up`
 
 #### Development mode
-If you'd like to build images yourself (with some changes in the code, for example), you have to clone all repository and build artifacts with maven. Then, run `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up`
+If you'd like to build images yourself (with some changes in the code, for example), you have to clone all repository and build artifacts with maven:
+```bash
+# in project root dir 
+mvn clean package -DskipTests
+```
+
+Then, run the following to deploy the application:
+```bash
+docker-compose -f docker-compose.dev.yml up # combine multiple configuration files, build in the order you supply the files; subsequent files will override the predecessors
+```
+
+If you see dockerfile.v0 error when running the above command, try [this solution](https://medium.com/code-kings/docker-how-to-fix-failed-to-solve-with-frontend-dockerfile-v0-error-when-building-a-docker-image-6d7dc95abd27). Basically, set the two environment variables:
+```shell
+set DOCKER_BUILDKIT=0
+set COMPOSE_DOCKER_CLI_BUILD=0
+```
 
 `docker-compose.dev.yml` inherits `docker-compose.yml` with additional possibility to build images locally and expose all containers ports for convenient development.
 
